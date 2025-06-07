@@ -1,99 +1,154 @@
-# app-react-native
+# App de Autenticação React Native
 
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+Um aplicativo de autenticação elegante e moderno desenvolvido com React Native CLI, utilizando Context API para gerenciamento de estado, Axios para requisições HTTP e uma API simulada com json-server.
 
-# Getting Started
+## 🚀 Tecnologias
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+- React Native CLI
+- Context API
+- Axios
+- React Native Toast Message
+- AsyncStorage
+- json-server
 
-## Step 1: Start Metro
+## 📋 Pré-requisitos
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+Para executar este projeto, você precisa ter instalado:
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- Node.js
+- npm ou yarn
+- Android Studio e SDK Android (para desenvolvimento Android)
+- Xcode (para desenvolvimento iOS - apenas macOS)
+- json-server (para simular a API)
 
-```sh
-# Using npm
+## 🔧 Instalação
+
+1. Clone o repositório:
+```bash
+git clone https://github.com/sab0c/app-react-native
+cd appAuth
+```
+
+2. Instale as dependências do projeto:
+```bash
+npm install
+# ou
+yarn
+```
+
+3. Instale o json-server globalmente:
+```bash
+npm install -g json-server
+# ou
+yarn global add json-server
+```
+
+## 📝 Configuração do IP
+
+Para dispositivos físicos, configure o IP correto:
+
+1. Encontre seu IP local:
+   - No Windows: Execute `ipconfig` no terminal
+   - No Mac/Linux: Execute `ifconfig` no terminal
+
+2. Configure o arquivo `src/services/api.ts`:
+```typescript
+export const api = axios.create({
+  baseURL: 'http://SEU_IP:3000',
+});
+```
+
+## 📦 Banco de Dados
+
+O arquivo `db.json` na raiz do projeto contém os dados de usuário:
+
+```json
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Sabrina Clemente",
+      "email": "sabrina.clemente@gmail.com",
+      "password": "123456"
+    }
+  ]
+}
+```
+
+## ⚠️ Observações Importantes
+
+1. O dispositivo/emulador e o computador devem estar na mesma rede
+2. Inicie o json-server antes de executar o app
+3. Verifique se a porta 3000 não está bloqueada pelo firewall
+4. Para iOS, execute `pod install` na pasta `ios` antes de iniciar
+
+## 🚀 Executando o Projeto
+
+1. Inicie a API mock:
+```bash
+npm run api
+# ou
+yarn api
+```
+
+2. Inicie o Metro Bundler:
+```bash
 npm start
-
-# OR using Yarn
+# ou
 yarn start
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
+3. Execute o app:
+```bash
+# Android
 npm run android
-
-# OR using Yarn
+# ou
 yarn android
-```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+# iOS
 npm run ios
-
-# OR using Yarn
+# ou
 yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## 🔑 Dados para Teste
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+Use estas credenciais para testar o login:
 
-## Step 3: Modify your app
+- Email: sabrina.clemente@gmail.com
+- Senha: 123456
 
-Now that you have successfully run the app, let's make changes!
+## 📱 Funcionalidades
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+- Sistema de login com validação
+- Persistência de sessão
+- Notificações toast para feedback
+- Tela de loading durante autenticação
+- Ícone personalizado com design 3D
+- Interface moderna e responsiva
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## 🎨 Design e Interface
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+O app apresenta um design moderno com:
+- Ícone 3D em tons de azul e verde
+- Animações suaves de transição
+- Mensagens toast para feedback
+- Layout clean e intuitivo
+- Experiência de usuário otimizada
 
-## Congratulations! :tada:
+## 📂 Estrutura do Projeto
 
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+```
+appAuth/
+├── src/
+│   ├── contexts/
+│   │   └── auth.tsx
+│   ├── services/
+│   │   └── api.ts
+│   └── screens/
+│       ├── Home.tsx
+│       └── Login.tsx
+├── android/
+├── ios/
+└── db.json
+```
