@@ -1,13 +1,19 @@
 module.exports = {
-  presets: ['module:@react-native/babel-preset', "nativewind/babel"],
-
-  plugins: [["module-resolver", {
-    root: ["./"],
-    extensions: [".js", ".ts", ".tsx", ".jsx"],
-
-    alias: {
-      "@": "./",
-      "tailwind.config": "./tailwind.config.js"
-    }
-  }]]
+  presets: ['module:@react-native/babel-preset'],
+  plugins: [
+    [
+      'module-resolver',
+      {
+        root: ['./src'],
+        extensions: ['.ios.js','.android.js','.js','.ts','.tsx','.json'],
+        alias: {
+          '@components': './src/components',
+          '@screens': './src/screens',
+          '@services': './src/services',
+          '@contexts': './src/contexts',
+          '@themes': './src/themes',
+        },
+      },
+    ],
+  ],
 };
