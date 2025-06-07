@@ -44,10 +44,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         visibilityTime: 4000,
       });
     } catch (error) {
-      Alert.alert(
-        'Erro na autenticação',
-        error instanceof Error ? error.message : 'Erro ao fazer login'
-      );
+      Toast.show({
+        type: 'error',
+        text1: 'Erro na autenticação',
+        text2: error instanceof Error ? error.message : 'Erro ao fazer login',
+        position: 'top',
+        visibilityTime: 4000,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -64,6 +67,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         text1: 'Logout realizado',
         position: 'top',
         visibilityTime: 2000,
+      });
+    } catch (error) {
+      Toast.show({
+        type: 'error',
+        text1: 'Erro ao fazer logout',
+        text2: error instanceof Error ? error.message : 'Tente novamente mais tarde',
+        position: 'top',
+        visibilityTime: 4000,
       });
     } finally {
       setIsLoading(false);

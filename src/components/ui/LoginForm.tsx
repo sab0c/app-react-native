@@ -16,6 +16,7 @@ import React,{useState} from 'react';
 import {Control,Controller} from 'react-hook-form';
 import {LoginFormData} from '../../schemas/login.schema';
 import {useAppTheme} from '../../themes';
+import {useThemeStore} from '@/src/stores/theme.store';
 
 interface LoginFormProps {
   control: Control<LoginFormData>;
@@ -31,6 +32,7 @@ export default function LoginForm({
   isLoading,
 }: LoginFormProps) {
   const {theme} = useAppTheme();
+  const isDark = useThemeStore(state => state.isDarkMode);
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -99,7 +101,7 @@ export default function LoginForm({
                   as={showPassword ? EyeIcon : EyeOffIcon}
                   width={22}
                   height={22}
-                  color={theme.colors.white}
+                  color={!isDark && showPassword ? theme.colors.white : !isDark ? theme.colors.black : theme.colors.white}
                 />
               </Pressable>
             </Input>
