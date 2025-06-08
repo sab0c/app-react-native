@@ -1,10 +1,7 @@
 import {
-  Button,
-  ButtonText,
   EyeIcon,
   EyeOffIcon,
   Icon,
-  Spinner,
   VStack,
 } from '@gluestack-ui/themed';
 import React, {useState} from 'react';
@@ -13,6 +10,7 @@ import {LoginFormData} from '../../schemas/login.schema';
 import {useAppTheme} from '../../themes';
 import {useThemeStore} from '../../stores/theme.store';
 import {FormField} from './FormField';
+import {Button} from './Button';
 
 interface LoginFormProps {
   control: Control<LoginFormData>;
@@ -60,25 +58,10 @@ export default function LoginForm({
 
       <Button
         onPress={onSubmit}
-        backgroundColor={theme.colors.gray}
-        height={46}
-        borderRadius={22}
-        marginBottom={4}
-        justifyContent="center"
-        isDisabled={isLoading}>
-        {isLoading ? (
-          <Spinner color="#FFFFFF" />
-        ) : (
-          <ButtonText
-            color={theme.colors.background}
-            fontSize={16}
-            fontWeight="bold"
-            textAlign="center"
-            width="100%">
-            Login
-          </ButtonText>
-        )}
-      </Button>
+        title="Login"
+        isLoading={isLoading}
+        variant="primary"
+      />
     </VStack>
   );
 }
