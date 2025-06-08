@@ -10,6 +10,7 @@ import ThemeToggleButton from '../components/ui/ThemeToggleButton';
 import {useAuth} from '../contexts/auth';
 import {useAppTheme} from '../themes';
 import {Button} from '../components/ui/Button';
+import DeviceInformation from '../components/ui/DeviceInformation';
 
 export default function HomeScreen() {
   const {signOut} = useAuth();
@@ -41,6 +42,9 @@ export default function HomeScreen() {
               Olá
             </Text>
           </Box>
+
+          <DeviceInformation />
+
           <Box
             padding={16}
             width={'100%'}

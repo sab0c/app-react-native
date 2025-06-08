@@ -14,21 +14,23 @@ import com.facebook.soloader.SoLoader
 
 class MainApplication : Application(), ReactApplication {
 
-  override val reactNativeHost: ReactNativeHost =
-      object : DefaultReactNativeHost(this) {
-        override fun getPackages(): List<ReactPackage> =
-            PackageList(this).packages.apply {
-              // Packages that cannot be autolinked yet can be added manually here, for example:
-              // add(MyReactNativePackage())
-            }
+  private val mReactNativeHost = object : DefaultReactNativeHost(this) {
+    override fun getUseDeveloperSupport(): Boolean = BuildConfig.DEBUG
 
-        override fun getJSMainModuleName(): String = "index"
+    override fun getPackages(): List<ReactPackage> {
+      val packages = PackageList(this).packages.toMutableList()
+      packages.add(DeviceNamePackage())
+      packages.add(OSVersionPackage())
+      return packages
+    }
 
-        override fun getUseDeveloperSupport(): Boolean = com.appauth.BuildConfig.DEBUG
+    override fun getJSMainModuleName(): String = "index"
 
-        override val isNewArchEnabled: Boolean = com.appauth.BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
-        override val isHermesEnabled: Boolean = com.appauth.BuildConfig.IS_HERMES_ENABLED
-      }
+    override val isNewArchEnabled: Boolean = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
+    override val isHermesEnabled: Boolean = BuildConfig.IS_HERMES_ENABLED
+  }
+
+  override val reactNativeHost: ReactNativeHost = mReactNativeHost
 
   override val reactHost: ReactHost
     get() = getDefaultReactHost(applicationContext, reactNativeHost)
@@ -36,7 +38,7 @@ class MainApplication : Application(), ReactApplication {
   override fun onCreate() {
     super.onCreate()
     SoLoader.init(this, OpenSourceMergedSoMapping)
-    if (com.appauth.BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
+    if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
       // If you opted-in for the New Architecture, we load the native entry point for this app.
       load()
     }
