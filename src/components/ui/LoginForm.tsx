@@ -16,7 +16,7 @@ import React,{useState} from 'react';
 import {Control,Controller} from 'react-hook-form';
 import {LoginFormData} from '../../schemas/login.schema';
 import {useAppTheme} from '../../themes';
-import {useThemeStore} from '@/src/stores/theme.store';
+import {useThemeStore} from '../../stores/theme.store';
 
 interface LoginFormProps {
   control: Control<LoginFormData>;

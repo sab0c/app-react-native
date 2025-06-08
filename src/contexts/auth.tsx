@@ -102,15 +102,4 @@ export const useAuth = () => {
     throw new Error('useAuth deve ser usado dentro de um AuthProvider');
   }
   return context;
-};
-
-export const loginUser = async (email: string, password: string) => {
-  try {
-    const response = await api.get(`/users?email=${email}`);
-    const user = response.data[0];
-    return user;
-  } catch (error) {
-    console.error('Erro ao buscar usuário:', error);
-    throw error;
-  }
 }; 

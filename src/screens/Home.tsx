@@ -2,14 +2,12 @@ import {
   Box,
   Button,
   ButtonText,
-  KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
-  Text,
+  Text
 } from '@gluestack-ui/themed';
 import React from 'react';
 
-import {Platform} from 'react-native';
 import ThemeToggleButton from '../components/ui/ThemeToggleButton';
 import {useAuth} from '../contexts/auth';
 import {useAppTheme} from '../themes';
@@ -24,10 +22,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView flex={1} backgroundColor={theme.colors.background}>
-      <KeyboardAvoidingView
-        flex={1}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <ScrollView
+      <ScrollView
           flex={1}
           backgroundColor={theme.colors.background}
           keyboardShouldPersistTaps="handled"
@@ -72,7 +67,6 @@ export default function HomeScreen() {
             </Box>
           </Box>
 		</ScrollView>
-		</KeyboardAvoidingView>
 		<ThemeToggleButton />
     </SafeAreaView>
   );
