@@ -3,20 +3,16 @@ import {
   ButtonText,
   EyeIcon,
   EyeOffIcon,
-  FormControl,
   Icon,
-  Input,
-  InputField,
-  Pressable,
   Spinner,
-  Text,
   VStack,
 } from '@gluestack-ui/themed';
-import React,{useState} from 'react';
-import {Control,Controller} from 'react-hook-form';
+import React, {useState} from 'react';
+import {Control} from 'react-hook-form';
 import {LoginFormData} from '../../schemas/login.schema';
 import {useAppTheme} from '../../themes';
 import {useThemeStore} from '../../stores/theme.store';
+import {FormField} from './FormField';
 
 interface LoginFormProps {
   control: Control<LoginFormData>;
@@ -37,82 +33,30 @@ export default function LoginForm({
 
   return (
     <VStack gap={24}>
-      <FormControl isInvalid={!!errors.email}>
-        <Controller
-          name="email"
-          control={control}
-          render={({field: {onChange, value}}) => (
-            <Input
-              borderWidth={1}
-              borderColor={theme.colors.border}
-              height={48}
-              backgroundColor={theme.colors.inputs}
-              borderRadius={24}
-              paddingLeft={12}>
-              <InputField
-                placeholder="E-mail"
-                onChangeText={onChange}
-                value={value}
-                keyboardType="email-address"
-                fontSize={15}
-                color={theme.colors.text}
-                textAlignVertical="center"
-                paddingTop={12}
-                placeholderTextColor={theme.colors.gray}
-              />
-            </Input>
-          )}
-        />
-        {errors.email && (
-          <Text color={theme.colors.error} fontSize={13} marginTop={2}>
-            {errors.email.message}
-          </Text>
-        )}
-      </FormControl>
+      <FormField
+        name="email"
+        control={control}
+        errors={errors}
+        placeholder="E-mail"
+        type="email"
+      />
 
-      <FormControl isInvalid={!!errors.password}>
-        <Controller
-          name="password"
-          control={control}
-          render={({field: {onChange, value}}) => (
-            <Input
-              borderWidth={1}
-              borderColor={theme.colors.border}
-              height={48}
-              backgroundColor={theme.colors.inputs}
-              borderRadius={24}
-              paddingLeft={12}
-              flexDirection="row"
-              alignItems="center">
-              <InputField
-                placeholder="Senha"
-                type={showPassword ? 'text' : 'password'}
-                onChangeText={onChange}
-                value={value}
-                fontSize={15}
-                color={theme.colors.text}
-                flex={1}
-                textAlignVertical="center"
-                paddingLeft={0}
-                placeholderTextColor={theme.colors.gray}
-              />
-              <Pressable onPress={() => setShowPassword(v => !v)} padding={14}>
-                <Icon
-                  as={showPassword ? EyeIcon : EyeOffIcon}
-                  width={22}
-                  height={22}
-                  color={!isDark && showPassword ? theme.colors.white : !isDark ? theme.colors.black : theme.colors.white}
-                />
-              </Pressable>
-            </Input>
-          )}
-        />
-        {errors.password && (
-          <Text color={theme.colors.error} fontSize={13} marginTop={2}>
-            {errors.password.message}
-          </Text>
-        )}
-      </FormControl>
+      <FormField
+        name="password"
+        control={control}
+        errors={errors}
+        placeholder="Senha"
+        type={showPassword ? 'text' : 'password'}
+        rightIcon={
+          <Icon
+            as={showPassword ? EyeIcon : EyeOffIcon}
+            width={22}
+            height={22}
+            color={!isDark && showPassword ? theme.colors.white : !isDark ? theme.colors.black : theme.colors.white}
+          />
+        }
+        onRightIconPress={() => setShowPassword(v => !v)}
+      />
 
       <Button
         onPress={onSubmit}

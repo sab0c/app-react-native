@@ -66,8 +66,8 @@ export default function HomeScreen() {
               </Button>
             </Box>
           </Box>
-		</ScrollView>
-		<ThemeToggleButton />
+		  </ScrollView>
+		  <ThemeToggleButton />
     </SafeAreaView>
   );
 }
