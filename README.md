@@ -283,3 +283,13 @@ appAuth/
 #### `/__mocks__`
 - Mocks globais para módulos externos
 - Configurações de mock para testes
+
+## 📱 Demonstração
+
+App iOS DEMO:
+
+![App Demo](https://i.imgur.com/RtB8UAY.gif)
+
+App Android DEMO:
+
+![App Demo](https://i.imgur.com/1rjbuJt.gif)
