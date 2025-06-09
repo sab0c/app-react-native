@@ -49,7 +49,7 @@ export default function HomeScreen() {
             padding={16}
             width={'100%'}
             maxWidth={400}
-            marginTop={24}
+            marginTop={300}
             opacity={0.7}>
             <Button
               onPress={handleLogout}
