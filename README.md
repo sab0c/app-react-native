@@ -24,7 +24,7 @@ Este é um aplicativo de autenticação desenvolvido em React Native, demonstran
 ### Testes
 - Jest
 - React Testing Library
-- MSW (Mock Service Worker)
+- @testing-library/react-hooks
 
 ### Desenvolvimento
 - ESLint
@@ -77,37 +77,41 @@ yarn test --watch
 
 ### Arquivos Testados
 - `App.test.tsx`: Teste do componente principal
-- `auth.test.tsx`: Testes do contexto de autenticação
-- `auth.service.test.ts`: Testes do serviço de autenticação
+- `contexts/auth.test.tsx`: Testes do contexto de autenticação
+- `services/auth.service.test.ts`: Testes do serviço de autenticação
+- `components/Toast.test.tsx`: Testes de notificações toast
 
 ### Funcionalidades Testadas
 
-#### Testes de Login
+#### Testes de Login (auth.test.tsx)
 - ✓ Login realiza com sucesso e exibe mensagem de boas-vindas
 - ✓ Login falha com credenciais inválidas
 - ✓ Exibe mensagem de erro quando login falha
 - ✓ Mostra indicador de loading durante o processo de login
 - ✓ Remove indicador de loading após conclusão do login
 
-#### Testes de Logout
+#### Testes de Logout (auth.test.tsx)
 - ✓ Realiza logout com sucesso
 - ✓ Limpa dados do usuário após logout
 - ✓ Exibe mensagem de confirmação após logout
 - ✓ Exibe mensagem de erro quando logout falha
 
-#### Testes de Inicialização
+#### Testes de Inicialização (auth.test.tsx)
 - ✓ Carrega usuário do storage ao iniciar o app
-- ✓ Inicia sem usuário quando storage está vazio
 
-#### Testes do Serviço de Autenticação
-- ✓ Salva token e dados do usuário no AsyncStorage
-- ✓ Recupera dados do usuário do AsyncStorage
+#### Testes do Serviço de Autenticação (auth.service.test.ts)
+- ✓ Login realiza com sucesso e salva dados
+- ✓ Falha corretamente com credenciais inválidas
+- ✓ Remove dados do usuário no logout
+- ✓ Recupera usuário do storage
+- ✓ Retorna null quando não há usuário armazenado
+- ✓ Recupera token do storage
 
-#### Testes de Componentes
-- ✓ App renderiza corretamente com todos os providers
-- ✓ Navegação funciona corretamente
-- ✓ Sistema de temas funciona
-- ✓ Toast messages são exibidas corretamente
+#### Testes de Notificações (Toast.test.tsx)
+- ✓ Exibe toast de sucesso corretamente
+- ✓ Exibe toast de erro corretamente
+- ✓ Exibe toast de info corretamente
+- ✓ Esconde o toast quando solicitado
 
 ### Detalhes Técnicos dos Testes
 
@@ -121,10 +125,10 @@ yarn test --watch
 #### Ferramentas Utilizadas
 - Jest como framework principal
 - React Testing Library para testes de componentes
-- Mock Service Worker (MSW) para simular chamadas API
+- @testing-library/react-hooks para testes de hooks
 
 ### Resumo da Cobertura
-- **Total de Arquivos**: 3 arquivos principais de teste
+- **Total de Arquivos**: 4 arquivos principais de teste
 - **Total de Testes**: 17 testes implementados
 - **Status**: ✅ 100% dos testes passando
 
@@ -145,10 +149,11 @@ Se você encontrar o erro "Cannot read properties of undefined (reading 'getStor
 
 ### 1. Iniciando o Backend (JSON Server)
 ```bash
+# Instala o JSON Server globalmente (se ainda não tiver)
 npm install -g json-server
 
 # Inicia o servidor na porta 3000
-npm run server
+npm run api
 # ou
 json-server --watch db.json --port 3000
 ```
@@ -173,7 +178,7 @@ npm run ios
 
 ### 3. Credenciais para Teste
 
-O app possui alguns usuários pré-cadastrados que podem ser utilizados para teste:
+O app possui um usuário pré-cadastrado que pode ser utilizado para teste:
 
 #### Usuário de Teste
 ```
@@ -189,20 +194,23 @@ O JSON Server disponibiliza os seguintes endpoints:
 - `GET /users`: Lista de usuários
 - `GET /users/:id`: Detalhes de um usuário específico
 
-### 5. Variáveis de Ambiente
-
-O projeto utiliza um arquivo `.env` para configurações. Crie uma cópia do `.env.example`:
-
-```bash
-cp .env.example .env
-```
-
-Configurações necessárias no `.env`:
-```
-API_URL=http://localhost:3000
-```
+### 5. Configuração do IP
 
 > ⚠️ **Nota**: Para dispositivos físicos Android, você precisará usar o IP da sua máquina no lugar de localhost
+
+> ⚠️ **Nota para iOS**: Para rodar no iOS, você precisa substituir 'localhost' pelo seu IPv4 no arquivo `src/services/api.ts`. 
+> Para encontrar seu IPv4 no MacOS, use o comando:
+> ```bash
+> ipconfig getifaddr en0
+> ```
+> Então substitua a URL no arquivo api.ts de:
+> ```typescript
+> http://localhost:3000
+> ```
+> para:
+> ```typescript
+> http://SEU_IPV4:3000
+> ```
 
 ### 6. Executando em Modo de Desenvolvimento
 
@@ -213,7 +221,7 @@ Para desenvolvimento, você pode usar o modo de hot reload:
 npm start
 
 # Terminal 2 - JSON Server
-npm run server
+json-server --watch db.json --port 3000
 
 # Terminal 3 - App (escolha um)
 npm run android
@@ -229,44 +237,33 @@ appAuth/
 │   ├── App.test.tsx            # Testes do componente principal
 │   ├── contexts/               # Testes dos contextos
 │   │   └── auth.test.tsx       # Testes do contexto de autenticação
-│   └── services/               # Testes dos serviços
-│       └── auth.service.test.ts
+│   ├── services/               # Testes dos serviços
+│   │   └── auth.service.test.ts
+│   └── components/             # Testes dos componentes
+│       └── Toast.test.tsx
 │
 ├── src/
-│   │
 │   ├── components/             # Componentes reutilizáveis
 │   │   └── ui/                 # Componentes de UI
-│   │       └── gluestack-ui-provider/
 │   │
 │   ├── contexts/               # Contextos do React
 │   │   └── auth.tsx            # Contexto de autenticação
 │   │
 │   ├── screens/                # Telas do aplicativo
 │   │   ├── Home.tsx
-│   │   ├── Login.tsx
+│   │   └── Login.tsx
 │   │
 │   ├── services/              # Serviços e APIs
 │   │   ├── api.ts             # Configuração do Axios
 │   │   └── auth.service.ts    # Serviço de autenticação
 │   │
-│   ├── stores/                # Stores (gerenciamento de estado)
-│   │   └── themeStore.ts      # Configuração do tema
+│   ├── stores/                # Stores de estado
+│   │   └── theme.store.ts     # Store do tema
 │   │
-│   └── utils/                 # Utilitários e helpers
-│       └── storage.ts         # Funções de armazenamento
-│
-├── __mocks__/                 # Mocks para testes
-│   ├── @gluestack-ui/
-│   ├── react-native.js
-│   └── react-native-toast-message.js
-│
-├── android/                   # Configurações Android
-├── ios/                       # Configurações iOS
-├── db.json                    # Banco de dados mock (JSON Server)
-├── jest.config.js             # Configuração do Jest
-├── jest.setup.js              # Setup dos testes
-├── tsconfig.json              # Configuração do TypeScript
-└── package.json               # Dependências e scripts
+│   └── themes/                # Configuração de temas
+│       ├── index.ts
+│       ├── light.ts
+│       └── dark.ts
 ```
 
 ### 📚 Principais Diretórios
