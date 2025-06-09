@@ -1,9 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import React,{createContext,useContext,useEffect,useState} from 'react';
-import {Alert,Platform} from 'react-native';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import Toast from 'react-native-toast-message';
-import {AuthService,User} from '../services/auth.service';
+import { AuthService, User } from '../services/auth.service';
 
 interface AuthContextData {
   user: User | null;
@@ -14,18 +11,6 @@ interface AuthContextData {
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-const api = axios.create({
-  baseURL: Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000'
-});
-
-api.interceptors.request.use(async (config) => {
-  const token = await AsyncStorage.getItem('@Auth:token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +20,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsLoading(true);
       const { user } = await AuthService.login(email, password);
       setUser(user);
-      
+
       Toast.show({
         type: 'success',
         text1: 'Login realizado com sucesso',
@@ -61,7 +46,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsLoading(true);
       await AuthService.logout();
       setUser(null);
-      
+
       Toast.show({
         type: 'info',
         text1: 'Logout realizado',
@@ -83,9 +68,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     AuthService.getStoredUser().then(storedUser => {
-      if (storedUser) {
-        setUser(storedUser);
-      }
+      if (storedUser) setUser(storedUser);
     });
   }, []);
 
@@ -102,4 +85,4 @@ export const useAuth = () => {
     throw new Error('useAuth deve ser usado dentro de um AuthProvider');
   }
   return context;
-}; 
+};
