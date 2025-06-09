@@ -40,6 +40,14 @@ jest.mock('@gluestack-ui/themed', () => ({
 }));
 
 jest.mock('react-native', () => ({
+  NativeModules: {
+    DeviceName: {
+      getDeviceName: jest.fn().mockResolvedValue('Test Device'),
+    },
+    OSVersionModule: {
+      getOSVersion: jest.fn().mockResolvedValue('Test OS Version'),
+    },
+  },
   Animated: {
     createAnimatedComponent: (component: any) => component,
     Value: jest.fn(() => ({

@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react-native';
+import { renderHook, act } from '@testing-library/react-hooks';
 import React from 'react';
 import Toast from 'react-native-toast-message';
 import { AuthProvider, useAuth } from '../../src/contexts/auth';
